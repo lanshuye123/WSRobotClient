@@ -31,7 +31,14 @@ export const useRobotStore = defineStore('robot', {
       if (!state.selectedJoint) return null
       return state.joints.get(state.selectedJoint) || null
     },
-    isWebSocketAvailable: () => webSocketFunctions !== null
+    isWebSocketAvailable: () => webSocketFunctions !== null,
+    jointAngles: (state) => {
+      const angles: Record<string, number> = {}
+      state.joints.forEach((joint, id) => {
+        angles[id] = joint.currentAngle
+      })
+      return angles
+    }
   },
   
   actions: {
